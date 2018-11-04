@@ -46,6 +46,8 @@ class App extends Component {
           <h1>Sudoku Stack</h1>
         </header>
         <SudokuBoard sudoku={this.state.sudoku} onChange={this.handleChange} />
+
+        <button onClick={this.solveSudoku}>Solve it Magically!</button>
       </div>
     );
   }
