@@ -1,48 +1,53 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import generator from "sudoku";
+import SudokuBoard from "./components/SudokuBoard";
+import "./App.css";
 
-class LambdaDemo extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { loading: false, msg: null };
+window.generator = generator;
+
+/*
+  Generates a sudoku with the structure
+
+  {rows: [{index: 0, cols: [{row: 0, col: 0, value: 1, readonly: true}, ...]}, ...]}
+
+*/
+function generateSudoku() {
+  const raw = generator.makepuzzle();
+  const result = { rows: [] };
+
+  for (let i = 0; i < 9; i++) {
+    const row = { cols: [], index: i };
+    for (let j = 0; j < 9; j++) {
+      const value = raw[i * 9 + j];
+      const col = {
+        row: i,
+        col: j,
+        value: value,
+        readonly: value !== null
+      };
+      row.cols.push(col);
+    }
+    result.rows.push(row);
   }
 
-  handleClick = e => {
-    e.preventDefault();
-
-    this.setState({ loading: true });
-    fetch('/.netlify/functions/hello')
-      .then(response => response.json())
-      .then(json => this.setState({ loading: false, msg: json.msg }));
-  };
-
-  render() {
-    const { loading, msg } = this.state;
-
-    return (
-      <p>
-        <button onClick={this.handleClick}>
-          {loading ? 'Loading...' : 'Call Lambda'}
-        </button>
-        <br />
-        <span>{msg}</span>
-      </p>
-    );
-  }
+  return result;
 }
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      sudoku: generateSudoku()
+    };
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <LambdaDemo />
+          <h1>Sudoku Stack</h1>
         </header>
+        <SudokuBoard sudoku={this.state.sudoku} />
       </div>
     );
   }
