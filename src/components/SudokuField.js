@@ -15,6 +15,7 @@ export default class SudokuField extends Component {
         value={field.value || ""}
         readOnly={field.readonly}
         onChange={this.handleChange}
+		maxLength="1"
       />
     );
   }

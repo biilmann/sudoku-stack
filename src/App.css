@@ -23,6 +23,9 @@
   color: #61dafb;
 }
 
+.row:nth-child(3n+1) .field { border-bottom: 3px solid #000; }
+.row:last-child .field { border-bottom: 1px solid #ccc; }
+
 .field {
   width: 3rem;
   height: 3rem;
@@ -30,15 +33,44 @@
   text-align: center;
   color: #888;
 }
+
 .field[readonly] {
   color: #222;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.field {
+	border: 1px solid #ccc;
+	outline: none;
+}
+
+.field:nth-child(3n) { border-right: 3px solid #000; }
+.field:last-child { border-right: 1px solid #ccc; }
+.field:focus { background: #efefef; }
+
+
+button {
+	margin-top: 30px;
+	display: inline-block;
+	font-size: 22px;
+	border: 1px solid #282c34;
+	background: #fff;
+	border-radius: 4px;
+	padding: 10px 30px;
+	cursor: pointer;
+	transition: all 250ms ease-in;
+}
+
+button:hover {
+	background: #282c34;
+	padding: 10px 60px;
+	color: #fff;
+}
+
+@media (max-width: 500px) {
+
+	.field {
+		width: 9vw;
+		height: 9vw;
+		font-size: 1.6em;
+	}
 }
